@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>डॉक्टर अपॉइंटमेंट बुक करें</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>अपॉइंटमेंट बुक करें</h2>
+    <form id="bookingForm">
+      <input type="text" id="name" placeholder="पूरा नाम" required>
+      <input type="tel" id="phone" placeholder="मोबाइल नंबर" required>
+      <select id="doctor">
+        <option>डॉ. शर्मा (हृदय रोग)</option>
+        <option>डॉ. गुप्ता (बाल रोग)</option>
+        <option>डॉ. वर्मा (हड्डी रोग)</option>
+      </select>
+      <input type="date" id="date" required>
+      <input type="time" id="time" required>
+      <textarea id="reason" rows="3" placeholder="किस सिलसिले में (बीमारी / चेकअप)"></textarea>
+      <button type="submit">बुक करें</button>
+    </form>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
