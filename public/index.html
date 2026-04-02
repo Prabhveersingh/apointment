@@ -1,28 +1,302 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>डॉक्टर अपॉइंटमेंट बुक करें</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Doctor Appointment Booking | Professional Care</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* animated background circles */
+    body::before {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      top: 10%;
+      left: 5%;
+      animation: float 20s infinite;
+    }
+    body::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+      bottom: 10%;
+      right: 5%;
+      animation: float 25s infinite reverse;
+    }
+    @keyframes float {
+      0% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(30px, -30px) scale(1.05); }
+      100% { transform: translate(0,0) scale(1); }
+    }
+
+    .booking-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      box-shadow: 0 25px 45px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.3);
+      width: 100%;
+      max-width: 550px;
+      padding: 35px 30px 45px;
+      transition: transform 0.3s ease;
+      z-index: 2;
+    }
+    .booking-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+    }
+    .header p {
+      color: #5a5a6e;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      color: #2d2d3a;
+      margin-bottom: 8px;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+    }
+    label i {
+      margin-right: 8px;
+      color: #764ba2;
+      width: 20px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 24px;
+      background: white;
+      transition: all 0.2s;
+      outline: none;
+      color: #1a1a2e;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #764ba2;
+      box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .row-2cols {
+      display: flex;
+      gap: 15px;
+    }
+    .row-2cols .form-group {
+      flex: 1;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(95deg, #667eea, #764ba2);
+      border: none;
+      padding: 16px;
+      border-radius: 40px;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 10px;
+      box-shadow: 0 8px 20px rgba(102,126,234,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    button:hover {
+      transform: scale(1.01);
+      background: linear-gradient(95deg, #5a67d8, #6b46a0);
+      box-shadow: 0 10px 25px rgba(102,126,234,0.4);
+    }
+    button i {
+      font-size: 20px;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 12px;
+      color: #7c7c8c;
+      border-top: 1px solid #edf2f7;
+      padding-top: 20px;
+    }
+    @media (max-width: 550px) {
+      .booking-card { padding: 25px 20px; }
+      .row-2cols { flex-direction: column; gap: 0; }
+      .header h1 { font-size: 28px; }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h2>अपॉइंटमेंट बुक करें</h2>
+  <div class="booking-card">
+    <div class="header">
+      <h1><i class="fas fa-stethoscope"></i> Book Appointment</h1>
+      <p>Secure your visit with top specialists — instant confirmation & digital receipt</p>
+    </div>
+
     <form id="bookingForm">
-      <input type="text" id="name" placeholder="पूरा नाम" required>
-      <input type="tel" id="phone" placeholder="मोबाइल नंबर" required>
-      <select id="doctor">
-        <option>डॉ. शर्मा (हृदय रोग)</option>
-        <option>डॉ. गुप्ता (बाल रोग)</option>
-        <option>डॉ. वर्मा (हड्डी रोग)</option>
-      </select>
-      <input type="date" id="date" required>
-      <input type="time" id="time" required>
-      <textarea id="reason" rows="3" placeholder="किस सिलसिले में (बीमारी / चेकअप)"></textarea>
-      <button type="submit">बुक करें</button>
+      <div class="form-group">
+        <label><i class="fas fa-user-md"></i> Doctor *</label>
+        <select id="doctor" required>
+          <option value="Dr. Sharma (Cardiologist)">Dr. Sharma (Cardiologist)</option>
+          <option value="Dr. Gupta (Pediatrician)">Dr. Gupta (Pediatrician)</option>
+          <option value="Dr. Verma (Orthopedic)">Dr. Verma (Orthopedic)</option>
+          <option value="Dr. Nair (Neurologist)">Dr. Nair (Neurologist)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-user"></i> Full Name *</label>
+        <input type="text" id="name" placeholder="e.g. Rajesh Khanna" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-phone-alt"></i> Mobile Number *</label>
+        <input type="tel" id="phone" placeholder="10-digit mobile number" required>
+      </div>
+
+      <div class="row-2cols">
+        <div class="form-group">
+          <label><i class="fas fa-calendar-day"></i> Date *</label>
+          <input type="date" id="date" required>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-clock"></i> Time *</label>
+          <input type="time" id="time" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-notes-medical"></i> Reason / Concern</label>
+        <textarea id="reason" placeholder="Briefly describe your symptoms or purpose of visit..."></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn">
+        <i class="fas fa-check-circle"></i> Confirm Booking
+      </button>
+      <div class="footer-note">
+        <i class="fas fa-lock"></i> Secure & encrypted • Free PDF receipt after booking
+      </div>
     </form>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="script.js"></script>
+  <script>
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Processing...';
+
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const doctor = document.getElementById('doctor').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const reason = document.getElementById('reason').value.trim();
+
+      if (!name || !phone || !doctor || !date || !time) {
+        alert('Please fill all required fields (*)');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirm Booking';
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/book', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, doctor, date, time, reason })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          // Generate PDF receipt with jsPDF
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF();
+          doc.setFont("helvetica");
+          doc.setFontSize(20);
+          doc.text("Appointment Receipt", 20, 25);
+          doc.setFontSize(12);
+          doc.text(`Receipt No: ${result.receiptNo || 'APT-' + Date.now()}`, 20, 40);
+          doc.text(`Patient Name: ${name}`, 20, 55);
+          doc.text(`Mobile: ${phone}`, 20, 65);
+          doc.text(`Doctor: ${doctor}`, 20, 75);
+          doc.text(`Date: ${date}`, 20, 85);
+          doc.text(`Time: ${time}`, 20, 95);
+          doc.text(`Reason: ${reason || 'Not specified'}`, 20, 105);
+          doc.text(`Booking Time: ${new Date().toLocaleString()}`, 20, 120);
+          doc.setFontSize(10);
+          doc.text("Thank you for choosing us. Please arrive 10 mins early.", 20, 140);
+          doc.save(`receipt_${Date.now()}.pdf`);
+
+          alert('✓ Appointment booked successfully! Your receipt is downloading.');
+          document.getElementById('bookingForm').reset();
+        } else {
+          alert('Booking failed: ' + (result.error || 'Server error'));
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Network error. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Confirm Booking';
+      }
+    });
+
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').setAttribute('min', today);
+  </script>
 </body>
 </html>
