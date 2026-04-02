@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>एडमिन पैनल</title>
+  <style>
+    table, th, td { border: 1px solid black; border-collapse: collapse; padding: 8px; }
+    th { background: #f2f2f2; }
+  </style>
+</head>
+<body>
+  <h2>सभी अपॉइंटमेंट्स</h2>
+  <div>
+    <label>एडमिन टोकन: <input type="password" id="adminToken" placeholder="वही token जो .env में डाला था"></label>
+    <button onclick="loadAppointments()">लोड करें</button>
+  </div>
+  <div id="result"></div>
+
+  <script>
+    async function loadAppointments() {
+      const token = document.getElementById('adminToken').value;
+      if(!token) { alert('टोकन डालें'); return; }
+
+      const res = await fetch('/api/admin-appointments', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if(res.ok) {
+        let html = '<table><tr><th>नाम</th><th>फोन</th><th>डॉक्टर</th><th>तारीख</th><th>समय</th><th>सिलसिला</th><th>बुकिंग समय</th></tr>';
+        data.forEach(a => {
+          html += `<tr>
+            <td>${a.name}</td><td>${a.phone}</td><td>${a.doctor}</td>
+            <td>${a.date}</td><td>${a.time}</td><td>${a.reason || ''}</td>
+            <td>${new Date(a.bookingTime).toLocaleString()}</td>
+          </tr>`;
+        });
+        html += '</table>';
+        document.getElementById('result').innerHTML = html;
+      } else {
+        document.getElementById('result').innerHTML = '<p style="color:red">गलत टोकन या सर्वर एरर</p>';
+      }
+    }
+  </script>
+</body>
+</html>
